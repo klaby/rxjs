@@ -12,6 +12,7 @@ let users$: Observable<User>;
  *
  * Encapsulation example.
  */
+
 // Promise
 users = new Promise((resolve) => {
   resolve(USERS[0]);
