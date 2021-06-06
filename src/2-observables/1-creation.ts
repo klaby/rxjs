@@ -4,10 +4,6 @@ import { Logger } from "../__utils__/log.util";
 const logger = new Logger("Creation");
 
 /**
- * @name Creation
- */
-
-/**
  * TODO: 01 - Create Observable
  *
  * @Observable Represents the idea of an invokable collection of future
