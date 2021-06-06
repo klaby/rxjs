@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
 
-const { log } = createLog("Encapsulation");
+const logger = new Logger("Encapsulation");
 
 let users: Promise<User>;
 let users$: Observable<User>;
@@ -23,5 +23,9 @@ users$ = new Observable((observable) => {
   observable.next(USERS[0]);
 });
 
-// users.then((result) => log("p", result));
-// users$.subscribe((result) => log("o", result));
+users.then((result) => {
+  logger.debug({ mode: "promise", message: result.name });
+});
+users$.subscribe((result) => {
+  logger.debug({ mode: "observable", message: result.name });
+});

@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
 
-const { log, info, debug, error } = createLog("Cancellation");
+const logger = new Logger("Cancellation");
 
 let unsubscribed: boolean = false;
 let users$: Observable<User>;
@@ -29,12 +29,12 @@ let users$: Observable<User>;
  * Unsubscribe with observables.
  */
 users$ = new Observable((observer) => {
-  log("o", info("Observable started..."));
+  logger.debug({ mode: "observable", title: "Observable started..." });
 
   const interval = setInterval(() => {
     if (unsubscribed) {
       // Uncomment the error-busting cleanup function.
-      console.log(error("Memory Leak"));
+      logger.error("Memory Leak");
     }
 
     observer.next(USERS[0]);
@@ -50,11 +50,11 @@ users$ = new Observable((observer) => {
 });
 
 const subscriber = users$.subscribe((result) => {
-  log("o", "Emit:", result.name);
+  logger.debug({ mode: "observable", message: result.name });
 });
 
 setTimeout(() => {
-  console.log(debug("\nUnsubscribe\n"));
+  logger.warn("Unsubscribe");
   subscriber.unsubscribe();
   unsubscribed = true;
 }, 5000);

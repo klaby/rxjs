@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
 
-const { log } = createLog("Async");
+const logger = new Logger("Async");
 
 let users: Promise<User>;
 let users$: Observable<User>;
@@ -36,11 +36,11 @@ users$ = new Observable((observable) => {
 
 const resolveAll = (): void => {
   users.then((result) => {
-    log("p", "Emit:", result.name);
+    logger.debug({ mode: "promise", message: result.name });
   });
 
   users$.subscribe((result) => {
-    log("o", "Emit:", result.name);
+    logger.debug({ mode: "observable", message: result.name });
   });
 };
 

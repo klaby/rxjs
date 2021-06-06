@@ -1,10 +1,10 @@
 import { Observable } from "rxjs";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
+
+const logger = new Logger("Share");
 
 const TIME = 5000;
-
-const { log, info, debug } = createLog("Share");
 
 let users: Promise<User>;
 let users$: Observable<User>;
@@ -40,7 +40,7 @@ let users$: Observable<User>;
  * @MULTICAST
  */
 users = new Promise((resolve) => {
-  log("p", info("Promise started..."));
+  logger.debug({ mode: "promise", title: "Promise started..." });
   setTimeout(() => resolve(USERS[0]), TIME);
 });
 
@@ -57,7 +57,7 @@ users = new Promise((resolve) => {
  * @UNICAST
  */
 users$ = new Observable((observable) => {
-  log("o", info("Observable started..."));
+  logger.debug({ mode: "observable", title: "Observable started..." });
   setTimeout(() => observable.next(USERS[0]), TIME);
 });
 
@@ -70,7 +70,7 @@ const resolveAll = (): void => {
    * time.
    */
   users.then((result) => {
-    log("p", "Emit:", result.name);
+    logger.debug({ mode: "promise", message: result.name });
   });
 
   /**
@@ -81,11 +81,11 @@ const resolveAll = (): void => {
    * result.
    */
   users$.subscribe((result) => {
-    log("o", "Emit:.", result.name);
+    logger.debug({ mode: "observable", message: result.name });
   });
 };
 
 setTimeout(() => {
-  console.log(debug("\nTimeout"));
+  logger.warn(`Subscribing after ${TIME} ms`);
   resolveAll();
 }, TIME);

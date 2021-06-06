@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
 
-const { log, info } = createLog("Execution");
+const logger = new Logger("Execution");
 
 let users: Promise<User>;
 let users$: Observable<User>;
@@ -22,7 +22,7 @@ users = new Promise((resolve) => {
   /**
    * Promise is executed and resolved at creation time.
    */
-  log("p", info("Promise executed..."));
+  logger.debug({ mode: "promise", title: "Promise executed..." });
   resolve(USERS[0]);
 });
 
@@ -37,6 +37,6 @@ users$ = new Observable((observable) => {
   /**
    * The observable is performed only when the consumers.
    */
-  log("p", info("Observable executed..."));
+  logger.debug({ mode: "observable", title: "Observable executed..." });
   observable.next(USERS[0]);
 });

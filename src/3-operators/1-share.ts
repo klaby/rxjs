@@ -1,11 +1,11 @@
 import { Observable } from "rxjs";
 import { share } from "rxjs/operators";
 import { User, USERS } from "../__mock__/users.mock";
-import { createLog } from "../__utils__/log";
+import { Logger } from "../__utils__/log.util";
+
+const logger = new Logger("Share");
 
 const TIME = 4000;
-
-const { log, info } = createLog("Operators | Share");
 
 let users$: Observable<User>;
 
@@ -17,13 +17,13 @@ let users$: Observable<User>;
  */
 
 users$ = new Observable((observable) => {
-  log("o", info("Observable started..."));
+  logger.debug({ title: "Observable started..." });
   setTimeout(() => observable.next(USERS[0]), TIME);
 });
 
 const subscribe = (): void => {
   users$.subscribe((result) => {
-    log("o", "Emit:", result.name);
+    logger.debug({ message: result.name });
   });
 };
 
