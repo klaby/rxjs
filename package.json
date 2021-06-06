@@ -3,9 +3,10 @@
     "rxjs": "^7.1.0"
   },
   "scripts": {
-    "watch": "tsnd --respawn server.ts"
+    "watch": "tsnd --respawn --clear server.ts"
   },
   "devDependencies": {
+    "chalk": "^4.1.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.3.2"
   }

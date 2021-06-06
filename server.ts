@@ -1,1 +1,3 @@
-console.log(">  Running...");
+import "chalk";
+
+import "./src/observable-x-promise";
